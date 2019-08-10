@@ -12,12 +12,6 @@ namespace Xero_Coding_Exercise
     class Program
     {
         static void Main(string[] args)
-        {
-            // Create a driver instance for chromedriver
-            IWebDriver driver = new ChromeDriver();
-
-            //Navigate to xero page
-            driver.Navigate().GoToUrl("https://www.xero.com/");
-        }
+        {}
     }
 }
