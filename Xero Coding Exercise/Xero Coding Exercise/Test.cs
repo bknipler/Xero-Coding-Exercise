@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System;
 using System.Threading.Tasks;
 
 //As a Xero User,
@@ -21,46 +22,6 @@ namespace WebDriver_CSharp_Example
         [Test(Description = "Test")]
         public void Login_is_on_home_page()
         {
-            //Elements
-            //Logging page
-
-            //Dashboard
-            //IWebElement chartAccounts = driver.FindElement(By.Id("ext-gen16")); //Add bank Account-button
-            //IWebElement profile = driver.FindElement(By.Id("password"));
-            //IWebElement logOut = driver.FindElement(By.Id("password"));
-
-            //Accounting
-            //IWebElement accountVal = driver.FindElement(By.Id("password"));
-            //IWebElement anzImg = driver.FindElement(By.Id("password"));
-            //IWebElement bankLink = driver.FindElement(By.Id("password"));
-
-            ////Add Bank Accounts
-            //IWebElement searchBank = driver.FindElement(By.Id("password"));
-            //IWebElement searchBtn = driver.FindElement(By.Id("password"));
-            //IWebElement otherCountries = driver.FindElement(By.Id("password"));
-            //IWebElement anzBank = driver.FindElement(By.Id("password"));
-            //IWebElement accountName = driver.FindElement(By.Id("password"));
-            //IWebElement accountType = driver.FindElement(By.Id("password"));
-            //    //Drop down options
-            //    IWebElement everyday = driver.FindElement(By.Id("password"));
-            //    IWebElement loan = driver.FindElement(By.Id("password"));
-            //    IWebElement termDeposit = driver.FindElement(By.Id("password"));
-            //    IWebElement creditCard = driver.FindElement(By.Id("password"));
-            //    IWebElement other = driver.FindElement(By.Id("password"));
-            //IWebElement accountNumber = driver.FindElement(By.Id("password"));
-            //IWebElement additonalAccount = driver.FindElement(By.Id("password"));
-            //IWebElement continueBtn = driver.FindElement(By.Id("password"));
-            //IWebElement PageVal = driver.FindElement(By.Id("password"));
-
-            ////Chart of Accounts
-            //IWebElement searchField = driver.FindElement(By.Id("password"));
-            //IWebElement searchBtn2 = driver.FindElement(By.Id("password"));
-            //IWebElement tickBox = driver.FindElement(By.Id("password"));
-            //IWebElement deleteBtn = driver.FindElement(By.Id("password"));
-            //IWebElement okBtn = driver.FindElement(By.Id("password"));
-            //IWebElement deletedVal = driver.FindElement(By.Id("password"));
-
-            homeURL = "https://login.xero.com/";
             userName = "bknipler@gmail.com";
             userPassword = "XeroTest123";
 
@@ -69,6 +30,8 @@ namespace WebDriver_CSharp_Example
             WebDriverWait wait = new WebDriverWait(driver, System.TimeSpan.FromSeconds(15));
 
             //enter email address
+            Task.Delay(1000).Wait();
+
             wait.Until(driver => driver.FindElement(By.Id("email")));
             IWebElement email = driver.FindElement(By.Id("email"));
             email.Click();
@@ -152,12 +115,17 @@ namespace WebDriver_CSharp_Example
             IWebElement mainBtn = driver.FindElement(By.CssSelector(".xui-button-main"));
             mainBtn.Click();
 
-            IWebElement accounting = driver.FindElement(By.Id("accounting"));
+            Task.Delay(1000).Wait();
+
+
+            //accounting drop down
+            IWebElement accounting = driver.FindElement(By.CssSelector(".xrh-tab:nth-child(3)>.xrh-focusable"));
             accounting.Click();
 
             Task.Delay(1000).Wait();
 
-            IWebElement bankAccounts = driver.FindElement(By.Id("accounting-bank-accounts"));
+            //bank accounts tab
+            IWebElement bankAccounts = driver.FindElement(By.LinkText("Bank accounts"));
             bankAccounts.Click();
 
             Task.Delay(1000).Wait();
@@ -167,12 +135,113 @@ namespace WebDriver_CSharp_Example
 
             Task.Delay(1000).Wait();
 
+            wait.Until(driver => driver.FindElement(By.Id("xui-searchfield-1018-inputEl")));
+
+
+            IWebElement searchBank = driver.FindElement(By.Id("xui-searchfield-1018-inputEl"));
+            searchBank.Click();
+            searchBank.SendKeys("ANZ (NZ)");
+
+            Task.Delay(1000).Wait();
+
+            IWebElement otherCountries = driver.FindElement(By.LinkText("Show 1 result from other countries..."));
+            otherCountries.Click(); 
+
+            Task.Delay(1000).Wait();
+
+            
+
+            wait.Until(driver => driver.FindElement(By.XPath("//div[@id='view']//section/div[3]/ul/li[.='ANZ (NZ)']")));
+
+            IWebElement selectANZ_NZ = driver.FindElement(By.XPath("//div[@id='view']//section/div[3]/ul/li[.='ANZ (NZ)']"));
+            selectANZ_NZ.Click();
+
+            //wait.Until(driver => driver.FindElement(By.CssSelector(".x-view-item-focused")));
+
+            //IWebElement selectANZ_NZ = driver.FindElement(By.CssSelector(".x-view-item-focused"));
+            //selectANZ_NZ.Click();
+            Task.Delay(1000).Wait();
+
+            wait.Until(driver => driver.FindElement(By.Id("accountname-1037-inputEl")));
+
+            IWebElement accountName = driver.FindElement(By.Id("accountname-1037-inputEl"));
+            accountName.Click();
+            accountName.SendKeys("TestAccount");
+
+            Task.Delay(1000).Wait();
+
+            IWebElement accountType = driver.FindElement(By.Id("accounttype-1039-inputEl"));
+            accountType.Click();
+            Task.Delay(1000).Wait();
+
+            //dropdown of account types
+            IWebElement typeEveryday = driver.FindElement(By.CssSelector(".ba-combo-list-item:nth-child(1)"));
+          //  IWebElement typeLoan = driver.FindElement(By.CssSelector(".ba-combo-list-item:nth-child(2)"));
+          //  IWebElement typeTermDeposit = driver.FindElement(By.CssSelector(".ba-combo-list-item:nth-child(3)"));
+          //  IWebElement typeCC = driver.FindElement(By.CssSelector(".ba-combo-list-item:nth-child(4)"));
+          //  IWebElement typeOther = driver.FindElement(By.CssSelector(".ba-combo-list-item:nth-child(5)"));
+            typeEveryday.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement accountNumber = driver.FindElement(By.Id("accountnumber-1068-inputEl"));
+            accountNumber.Click();
+            accountNumber.SendKeys("111111");
+
+            Task.Delay(1000).Wait();
+
+            IWebElement subBtn = driver.FindElement(By.Id("common-button-submit-1015"));
+            subBtn.Click();
+
+            Task.Delay(1000).Wait();
+
+            wait.Until(driver => driver.FindElement(By.CssSelector(".xrh-tab:nth-child(3)>.xrh-focusable")));
+
+            //accounting drop down
+            IWebElement accounting2 = driver.FindElement(By.CssSelector(".xrh-tab:nth-child(3)>.xrh-focusable"));
+            accounting2.Click();
+
+            Task.Delay(1000).Wait();
+
+            //Chart of accounts
+            IWebElement chartAccounts = driver.FindElement(By.LinkText("Chart of accounts"));
+            chartAccounts.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement valAccount = driver.FindElement(By.LinkText("TestAccount"));
+            valAccount.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement closeWindow = driver.FindElement(By.Id("popupCancel"));
+            closeWindow.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement wilDelete = driver.FindElement(By.Id("WillDelete"));
+            wilDelete.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement delete = driver.FindElement(By.Id("ext-gen20"));
+            delete.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement closePopup = driver.FindElement(By.Id("popupOK"));
+            closePopup.Click();
+
+            Task.Delay(1000).Wait();
+
+            IWebElement deleteSuccessful = driver.FindElement(By.Id("ext-gen15"));
+            deleteSuccessful.Click();
         }
 
         [TearDown]
         public void TearDownTest()
         {
-          //  driver.Close();
+            driver.Close();
         }
 
         [SetUp]
